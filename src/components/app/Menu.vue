@@ -29,27 +29,17 @@
           </ul>
         </nav>
         <nav v-if="step === 0">
-          <ul class="href-menu" :class="{ animation_right : back === true }">
-            <span>Gerenciamento</span>
-              <li>
-                <div></div>
-                <div>
-                  <i class="fi fi-rr-list-check"></i>
-                </div>
-                <span>Permissões</span>
-              </li>
+          <ul class="href-menu" :class="{ animation_right : back === true } ">
+            <span>Ações</span>
+            <router-link to="/gerenciamento">
               <li>
                 <div></div>
                 <div>
                   <i class="fi fi-rr-settings-sliders"></i>
                 </div>
-                <span>Gerenciar menus</span>
+                <span>Gerenciamento</span>
               </li>
-          </ul>
-        </nav>
-        <nav v-if="step === 0">
-          <ul class="href-menu" :class="{ animation_right : back === true } ">
-            <span>Ações</span>
+            </router-link>
             <li @click="logout()">
               <div></div>
               <div>

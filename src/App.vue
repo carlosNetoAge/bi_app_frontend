@@ -41,7 +41,7 @@ export default {
 
   :root {
     --color-background: #F5F6FA;
-    --color-red: #FF3737;
+    --color-red: #EC344E;
     --color-black: #2B2B2B;
     --color-grey: #F4F4F6;
     --color-text-light: #555;
@@ -69,6 +69,64 @@ export default {
   /*
       Super Classes
    */
+
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #33333380;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-modal {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    animation: plus-modal forwards .2s;
+  }
+
+  @keyframes plus-modal {
+    from {
+      transform: scale(0.8);
+      opacity: .8;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .header-card-modal {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .c-loader {
+    animation: is-rotating 1s infinite;
+    border: 6px solid #e5e5e5;
+    border-radius: 50%;
+    border-top-color: #fa860d;
+    height: 50px;
+    width: 50px;
+  }
+
+  @keyframes is-rotating {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  .loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .btn-submit {
     width: 100%;

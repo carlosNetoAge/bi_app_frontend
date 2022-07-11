@@ -3,6 +3,8 @@ import Web from '../views/Web'
 import Age from "@/views/Age";
 import ForgotPassword from "@/views/ForgotPassword";
 import Guard from "../../services/middleware";
+import Management from "@/views/management/Management";
+import Users from "@/views/management/Users";
 
 
 const routes = [
@@ -16,6 +18,18 @@ const routes = [
     path: '/age',
     name: 'Age',
     component: Age,
+    beforeEnter: Guard.auth
+  },
+  {
+    path: '/gerenciamento',
+    name: 'Management',
+    component: Management,
+    beforeEnter: Guard.auth
+  },
+  {
+    path: '/gerenciamento/usuarios',
+    name: 'Users',
+    component: Users,
     beforeEnter: Guard.auth
   },
   {
