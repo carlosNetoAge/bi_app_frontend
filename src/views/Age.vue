@@ -4,8 +4,9 @@
       @page-item="pageItem"
     />
     <div class="content-container">
-        <template v-if="iframe !== null">
-          <iframe width="100%" height="100%" :src="iframe" frameborder="0" allowFullScreen="true"></iframe>
+        <template v-if="data !== null">
+          <h6>{{ data.subitem }}</h6>
+          <iframe width="100%" height="90%" :src="data.iframe" frameborder="0" allowFullScreen="true"></iframe>
         </template>
     </div>
   </div>
@@ -22,14 +23,14 @@ export default {
   },
   data() {
     return {
-      setor: '',
-      iframe: null,
+      data: null,
+      step: 1
     }
   },
   methods: {
     pageItem: function (data) {
-      this.setor = data.data
-      this.iframe = data.data
+      this.data = data.data
+      this.step = 0
     },
 
 
@@ -45,6 +46,12 @@ export default {
 
 <style scoped>
 
+  .content-container h6 {
+    font-size: 2.4rem;
+    color: #646464;
+    font-weight: 500;
+    margin-bottom: 1vh;
+  }
 
 
 </style>

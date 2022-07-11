@@ -19,7 +19,7 @@
           <ul class="href-menu" :class="{ animation_left : back === false }" v-if="step === 1">
               <i class="fi fi-rr-arrow-small-left" @click="backMenu()"></i>
               <span>Dashboards disponíveis</span>
-              <li v-for="sub in subMenuItems" @click="pageTrade(sub.sub_items.iframe)">
+              <li v-for="sub in subMenuItems" @click="pageTrade(sub.sub_items.iframe, sub.sub_items.subitem)">
                 <div></div>
                 <div>
                   <i class="fi fi-rr-dashboard"></i>
@@ -31,20 +31,20 @@
         <nav v-if="step === 0">
           <ul class="href-menu" :class="{ animation_right : back === true }">
             <span>Gerenciamento</span>
-            <li>
-              <div></div>
-              <div>
-                <i class="fi fi-rr-list-check"></i>
-              </div>
-              <span>Permissões</span>
-            </li>
-            <li>
-              <div></div>
-              <div>
-                <i class="fi fi-rr-settings-sliders"></i>
-              </div>
-              <span>Gerenciar menus</span>
-            </li>
+              <li>
+                <div></div>
+                <div>
+                  <i class="fi fi-rr-list-check"></i>
+                </div>
+                <span>Permissões</span>
+              </li>
+              <li>
+                <div></div>
+                <div>
+                  <i class="fi fi-rr-settings-sliders"></i>
+                </div>
+                <span>Gerenciar menus</span>
+              </li>
           </ul>
         </nav>
         <nav v-if="step === 0">
@@ -122,9 +122,12 @@ export default {
 
           })
     },
-    pageTrade: function (item) {
+    pageTrade: function (iframe, subitem) {
       this.$emit('page-item',
-          { data: item })
+          { data: {
+              iframe,
+              subitem
+            } })
     },
     backMenu: function () {
       this.step = 0
@@ -134,6 +137,9 @@ export default {
       $cookies.remove('user_id')
       $cookies.remove('token')
       $cookies.remove('email')
+
+      this.$router.replace("/")
+
     }
   },
   mounted() {
