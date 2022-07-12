@@ -25,10 +25,10 @@
               <div class="card-main">
                 <template v-if="loading === false">
                   <div>
-                    <i class="fi fi-sr-users-alt"></i>
-                    <span>{{ data.setores_contagem }}</span>
+                    <i class="fi fi-sr-apps"></i>
+                    <span>{{ data.menu_contagem }}</span>
                   </div>
-                  <span>Setores</span>
+                  <span>Menus</span>
                 </template>
                 <Loading
                     v-if="loading === true"/>

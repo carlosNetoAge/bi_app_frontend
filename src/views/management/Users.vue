@@ -25,7 +25,7 @@
                 <td>{{ user.nome }} {{ user.sobrenome }}</td>
                 <td>{{ user.email }}</td>
                 <td class="actions-users">
-                  <i class="fi fi-rr-edit" @click="pageUser(user.id)"></i>
+                  <i class="fi fi-rr-edit" @click="pageUser(user.id, 1)"></i>
                   <template v-if="user.ativo === 1">
                     <i class="fi fi-rr-ban" @click="modalActions(1, 'delete', user.id)"></i>
                   </template>
@@ -75,6 +75,11 @@
         </div>
       </div>
     </div>
+    <User
+        v-if="user.status === true"
+        :id="user.id"
+        @page-user="pageUser(data)"
+    />
   </div>
 </template>
 
@@ -83,12 +88,14 @@
 import Menu from "@/components/app/management/Menu";
 import axios from "axios";
 import Loading from "@/components/Loading";
+import User from "@/views/management/User";
 
 export default {
   name: "Users",
   components: {
     Menu,
-    Loading
+    Loading,
+    User
   },
   data() {
     return {
@@ -97,6 +104,10 @@ export default {
       modal: false,
       action: {
         step: 0,
+        id: 0
+      },
+      user: {
+        status: false,
         id: 0
       }
     }
@@ -124,9 +135,22 @@ export default {
 
           })
     },
-    pageUser: function (id) {
-      this.$router.replace('/gerenciamento/usuario/'+id)
-  },
+    pageUser: function (id, action) {
+
+      if(action === 1) {
+
+        this.user.id = id
+        this.user.status = true
+
+      } else {
+
+        this.user.id = 0
+        this.user.status = false
+
+      }
+
+
+    },
     modalActions: function (step, action, id) {
 
       if(step === 0) {
@@ -202,7 +226,9 @@ export default {
             })
 
       }
-    }
+    },
+
+
   },
   created() {
   },

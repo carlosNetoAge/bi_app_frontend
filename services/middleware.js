@@ -5,10 +5,11 @@ export default {
 
         if(!token){
             next('/')
+            return
         }
 
         next()
-
+        return
     },
 
     // Impedir retorno para página de login com token ativo
@@ -17,9 +18,11 @@ export default {
 
         if(token) {
             next('/age')
+            return
         }
 
         next()
+        return
 
     }
 }
