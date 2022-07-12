@@ -56,12 +56,8 @@ export default {
 
             const user = res.data
 
-            console.log(res)
-
             this.msg = user.msg
             this.status = user.status
-            console.log(this.msg)
-            console.log(this.status)
 
             if(user.token) {
 

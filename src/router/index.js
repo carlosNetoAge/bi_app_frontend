@@ -5,6 +5,7 @@ import ForgotPassword from "@/views/ForgotPassword";
 import Guard from "../../services/middleware";
 import Management from "@/views/management/Management";
 import Users from "@/views/management/Users";
+import User from "@/views/management/User";
 
 
 const routes = [

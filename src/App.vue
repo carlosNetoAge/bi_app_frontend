@@ -87,7 +87,23 @@ export default {
     animation: plus-modal forwards .2s;
   }
 
-  @keyframes plus-modal {
+  .btn-close {
+    width: 100%;
+    font-size: 3rem;
+    text-align: right;
+  }
+
+  .btn-close i {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+  }
+
+  .btn-close i:hover {
+    color: var(--color-red);
+  }
+
+
+@keyframes plus-modal {
     from {
       transform: scale(0.8);
       opacity: .8;

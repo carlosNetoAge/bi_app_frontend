@@ -25,7 +25,7 @@
                 <td>{{ user.nome }} {{ user.sobrenome }}</td>
                 <td>{{ user.email }}</td>
                 <td class="actions-users">
-                  <i class="fi fi-rr-edit"></i>
+                  <i class="fi fi-rr-edit" @click="pageUser(user.id)"></i>
                   <template v-if="user.ativo === 1">
                     <i class="fi fi-rr-ban" @click="modalActions(1, 'delete', user.id)"></i>
                   </template>
@@ -124,6 +124,9 @@ export default {
 
           })
     },
+    pageUser: function (id) {
+      this.$router.replace('/gerenciamento/usuario/'+id)
+  },
     modalActions: function (step, action, id) {
 
       if(step === 0) {
@@ -212,20 +215,6 @@ export default {
 
 <style scoped>
 
-.btn-close {
-  width: 100%;
-  font-size: 3rem;
-  text-align: right;
-}
-
-.btn-close i {
-  cursor: pointer;
-  transition: .2s ease-in-out;
-}
-
-.btn-close i:hover {
-  color: var(--color-red);
-}
 
 .btn-submit {
   border: 2px solid var(--color-red);

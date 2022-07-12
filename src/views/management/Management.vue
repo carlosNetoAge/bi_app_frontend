@@ -71,11 +71,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="user in data.usuarios">
-                    <td>{{ user.nome }} {{ user.sobrenome }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.created_at }}</td>
-                  </tr>
+                    <tr v-for="user in data.usuarios" @click="pageUser(user.id, 1)">
+                      <td>{{ user.nome }} {{ user.sobrenome }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.created_at }}</td>
+                    </tr>
                 </tbody>
               </table>
               <Loading
@@ -85,7 +85,15 @@
           </div>
         </div>
       </div>
+      <User
+          v-if="user.status === true"
+          :id="user.id"
+          @page-user="pageUser(data)"
+      />
   </div>
+
+
+
 </template>
 
 <script>
@@ -93,23 +101,29 @@
 import Menu from "@/components/app/management/Menu";
 import axios from "axios";
 import Loading from "@/components/Loading";
+import User from "@/views/management/User";
 
 export default {
   name: "Management",
   components: {
     Menu,
-    Loading
+    Loading,
+    User
   },
   data() {
     return {
       data: {
 
       },
-      loading: true
+      loading: true,
+      user: {
+        status: false,
+        id: 0
+      }
     }
   },
   methods: {
-    getInfo() {
+    getInfo: function () {
 
       axios({
         method: "GET",
@@ -128,6 +142,22 @@ export default {
           .catch((error) => {
 
           })
+    },
+    pageUser: function (id, action) {
+
+      if(action === 1) {
+
+        this.user.id = id
+        this.user.status = true
+
+      } else {
+
+        this.user.id = 0
+        this.user.status = false
+
+      }
+
+
     }
   },
   created() {
