@@ -16,18 +16,18 @@
             <td>{{ menu.item }}</td>
             <td style="text-align: center">
               <template v-if="menu.menu_allowed.length">
-                <span :class="{active: menu.menu_allowed.length, inative}"> Acessível </span>
+                <span :class="{active: menu.menu_allowed.length}"> Acessível </span>
               </template>
               <template v-else>
                 <span :class="{inative: !menu.menu_allowed.length}"> Inacessível </span>
               </template>
             </td>
-            <td class="actions-table">
+            <td class="actions-table" style="width: 100%">
                 <template v-if="menu.menu_allowed.length">
-                  <i class="fi fi-rr-cross-small" style="color: var(--color-red); font-size: 2.6rem" @click="alterAccess(menu.id, 'inative')"></i>
+                  <i class="fi fi-rr-cross-small" style="color: var(--color-red); font-size: 2.6rem" @click="alterAccess(menu.id, 'inative', 'menu')"></i>
                 </template>
                 <template v-else>
-                  <i class="fi fi-rr-check" style="color: #4AD09E" @click="alterAccess(menu.id, 'active')"></i>
+                  <i class="fi fi-rr-check" style="color: #4AD09E" @click="alterAccess(menu.id, 'active', 'menu')"></i>
                 </template>
               <i class="fi fi-rr-redo" @click="tradeMenu(menu.id, 2)"></i>
             </td>
@@ -36,8 +36,42 @@
         </table>
       </div>
   </div>
-  <div id="allowed-items" v-if="loading === false && step === 2">
-
+  <div id="allowed-items" style="flex-direction: column; gap: 2rem" v-if="loading === false && step === 2">
+      <h6>Dashboard {{ menu.menu.item }}</h6>
+      <div class="menu-allowed">
+        <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Menu</th>
+            <th style="text-align: center">Status</th>
+            <th>Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="sub in menu.submenu">
+            <td>{{ sub.id }}</td>
+            <td>{{ sub.subitem }}</td>
+            <td style="text-align: center">
+              <template v-if="sub.submenu_allowed.length">
+                <span :class="{active: sub.submenu_allowed.length}"> Acessível </span>
+              </template>
+              <template v-else>
+                <span :class="{inative: !sub.submenu_allowed.length}"> Inacessível </span>
+              </template>
+            </td>
+            <td class="actions-table" style="width: 100%">
+              <template v-if="sub.submenu_allowed.length">
+                <i class="fi fi-rr-cross-small" style="color: var(--color-red); font-size: 2.6rem" @click="alterAccess(sub.id, 'inative', 'submenu')"></i>
+              </template>
+              <template v-else>
+                <i class="fi fi-rr-check" style="color: #4AD09E" @click="alterAccess(sub.id, 'active', 'submenu')"></i>
+              </template>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
   </div>
   <Loading
       v-if="loading === true"
@@ -68,7 +102,8 @@ export default {
       menu: {
         id: 0,
         menu: {},
-        submenu: {}
+        submenu: {},
+        submenu_id: 0
       },
       permission: {},
       msg: ''
@@ -101,17 +136,20 @@ export default {
       this.step = step
       this.menu.id = id
 
-      this.getMenu(this.menu.id)
+      this.loading = true
+      if(step === 2) {
+        this.getMenu(this.menu.id)
+      }
     },
     getMenu: function (id) {
 
       axios({
         method: "GET",
-        url: "http://localhost:8000/api/allowed/menu_general"+id,
+        url: "http://localhost:8000/api/menu_items/"+id,
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
-          "user_id": this.id
+          "user_id": this.id,
         }
       })
           .then((res) => {
@@ -129,15 +167,17 @@ export default {
 
       axios({
         method: "GET",
-        url: "http://localhost:8000/api/sub_menus/"+id,
+        url: "http://localhost:8000/api/allowed/menu_submenu_general/",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
-          "user_id": this.id
+          "user_id": this.id,
+          "item_id": id
         }
       })
           .then((res) => {
 
+            this.loading = false
             this.menu.submenu = res.data
 
           })
@@ -146,74 +186,142 @@ export default {
           })
 
     },
-    alterAccess: function (id, action) {
+    alterAccess: function (id, action, type) {
 
       if(action === 'active') {
 
-            axios({
-              method: "GET",
-              url: "http://localhost:8000/api/menu-permissions/create",
-              headers: {
-                "Content-Type": "application/json",
-                "authorization": $cookies.get('token'),
-                "user_id": this.id,
-                "item_id": id
-              }
-            })
-                .then((res) => {
+            if(type === 'menu') {
 
-                  this.permission = res.data
-                  console.log(res.data)
+              axios({
+                method: "GET",
+                url: "http://localhost:8000/api/menu-permissions/create",
+                headers: {
+                  "Content-Type": "application/json",
+                  "authorization": $cookies.get('token'),
+                  "user_id": this.id,
+                  "item_id": id
+                }
+              })
+                  .then((res) => {
 
-                  if(this.permission.status === true) {
+                    this.permission = res.data
 
-                    this.msg = this.permission.msg
+                    if(this.permission.status === true) {
 
-                    this.loading = true
-                    this.getMenus()
+                      this.msg = this.permission.msg
 
-                  }
+                      this.loading = true
+                      this.getMenus()
 
-                })
-                .catch((error) => {
+                    }
 
-                })
+                  })
+                  .catch((error) => {
+
+                  })
+            }
+
+            if(type === 'submenu') {
+
+              axios({
+                method: "GET",
+                url: "http://localhost:8000/api/submenu-permissions/create",
+                headers: {
+                  "Content-Type": "application/json",
+                  "authorization": $cookies.get('token'),
+                  "user_id": this.id,
+                  "item_id": this.menu.id,
+                  "subitem_id": id
+                }
+              })
+                  .then((res) => {
+
+                    this.permission = res.data
+
+                    if(this.permission.status === true) {
+
+                      this.msg = this.permission.msg
+
+                      this.loading = true
+                      this.getMenu(this.menu.id)
+
+                    }
+
+                  })
+                  .catch((error) => {
+
+                  })
+            }
 
 
       }
 
-      if(action === 'inative'){
+          if(action === 'inative'){
 
-        axios({
-          method: "DELETE",
-          url: "http://localhost:8000/api/menu-permissions/"+id,
-          headers: {
-            "Content-Type": "application/json",
-            "authorization": $cookies.get('token'),
-            "user_id": this.id,
+            if(type === 'menu') {
+
+              axios({
+                method: "DELETE",
+                url: "http://localhost:8000/api/menu-permissions/"+id,
+                headers: {
+                  "Content-Type": "application/json",
+                  "authorization": $cookies.get('token'),
+                  "user_id": this.id,
+                }
+              })
+                  .then((res) => {
+
+                    this.permission = res.data
+
+                    if(this.permission.status === true) {
+
+                      this.msg = this.permission.msg
+
+                      this.loading = true
+                      this.getMenus()
+
+                    }
+
+                  })
+                  .catch((error) => {
+
+                  })
+              }
+
+            if(type === 'submenu') {
+
+              axios({
+                method: "DELETE",
+                url: "http://localhost:8000/api/submenu-permissions/"+id,
+                headers: {
+                  "Content-Type": "application/json",
+                  "authorization": $cookies.get('token'),
+                  "user_id": this.id,
+                  "subitem_id": id
+                }
+              })
+                  .then((res) => {
+
+                    this.permission = res.data
+
+                    if(this.permission.status === true) {
+
+                      this.msg = this.permission.msg
+
+                      this.loading = true
+                      this.getMenu(this.menu.id)
+
+                    }
+
+                  })
+                  .catch((error) => {
+
+                  })
+
+            }
+
           }
-        })
-            .then((res) => {
-
-              this.permission = res.data
-
-              if(this.permission.status === true) {
-
-                this.msg = this.permission.msg
-
-                this.loading = true
-                this.getMenus()
-
-              }
-
-            })
-            .catch((error) => {
-
-            })
-
       }
-
-    }
   },
   created() {
     this.getMenus(this.id)
@@ -237,7 +345,8 @@ export default {
 
  .menu-allowed {
    width: 100%;
-   height: 100%;
+   max-height: 100%;
+   overflow-y: auto;
  }
 
  .menu-allowed table {
@@ -263,6 +372,7 @@ export default {
  .menu-allowed table thead tr th:nth-child(4) {
    width: 25%;
    text-align: center;
+   padding: 0 1vw 0 1.2vw;
  }
 
  .menu-allowed table tbody tr td:nth-child(1) {
@@ -274,6 +384,11 @@ export default {
  }
 
  .menu-allowed table tbody tr td:nth-child(3) {
+   width: 25%;
+   text-align: center;
+ }
+
+ .menu-allowed table tbody tr td:nth-child(4) {
    width: 25%;
    text-align: center;
    padding: 0;
@@ -363,6 +478,12 @@ export default {
    font-size: 1.2rem;
    padding: 5px 10px;
    font-weight: 600;
+ }
+
+ #allowed-items h6 {
+   text-align: center;
+   font-size: 2.4rem;
+   color: #51504F;
  }
 
 </style>

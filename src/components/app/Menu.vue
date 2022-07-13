@@ -8,7 +8,7 @@
         <nav>
           <ul class="href-menu" :class="{ animation_right : back === true }" v-if="step === 0">
             <span>Setores</span>
-            <li v-for="item in menuItems" @click="subMenu(item.id)">
+            <li v-for="item in menuItems" @click="subMenu(item.item_id)">
                 <div></div>
                 <div>
                   <i class="fi fi-rr-dashboard"></i>
@@ -125,6 +125,7 @@ export default {
     },
     logout: function () {
       $cookies.remove('user_id')
+      $cookies.remove('privelegio')
       $cookies.remove('token')
       $cookies.remove('email')
 

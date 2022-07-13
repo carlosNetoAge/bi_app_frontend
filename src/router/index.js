@@ -6,6 +6,7 @@ import Guard from "../../services/middleware";
 import Management from "@/views/management/Management";
 import Users from "@/views/management/Users";
 import User from "@/views/management/User";
+import Dashboard from "@/views/management/Dashboard";
 
 
 const routes = [
@@ -31,6 +32,12 @@ const routes = [
     path: '/gerenciamento/usuarios',
     name: 'Users',
     component: Users,
+    beforeEnter: Guard.auth
+  },
+  {
+    path: '/gerenciamento/dashboards',
+    name: 'Dashboard',
+    component: Dashboard,
     beforeEnter: Guard.auth
   },
   {

@@ -27,12 +27,12 @@
                             <span>Permissões</span>
                           </div>
                         </li>
-                        <li :class="{ activeClass : step === 3 }" @click="stepsMenu(3)">
-                          <div>
-                            <i class="fi fi-rr-pulse"></i>
-                            <span>Log de acesso</span>
-                          </div>
-                        </li>
+<!--                        <li :class="{ activeClass : step === 3 }" @click="stepsMenu(3)">-->
+<!--                          <div>-->
+<!--                            <i class="fi fi-rr-pulse"></i>-->
+<!--                            <span>Log de acesso</span>-->
+<!--                          </div>-->
+<!--                        </li>-->
                       </ul>
                     </nav>
                   </div>
@@ -67,15 +67,22 @@
                 <table v-if="loading === false">
                   <thead>
                   <tr>
-                    <th>Setor</th>
+                    <th>Nível de usuário</th>
                     <th>Data do cadastro</th>
                     <th>E-mail</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr>
-                    <td>{{ data.setor_id }}</td>
-                    <td>12/07/2022</td>
+                    <td>
+                      <template v-if="data.privilegio === 1">
+                        Administrador
+                      </template>
+                      <template v-else>
+                        Padrão
+                      </template>
+                    </td>
+                    <td>{{ data.registrado_em }}</td>
                     <td>{{ data.email }}</td>
                   </tr>
                   </tbody>

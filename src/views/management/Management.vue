@@ -74,7 +74,7 @@
                     <tr v-for="user in data.usuarios" @click="pageUser(user.id, 1)">
                       <td>{{ user.nome }} {{ user.sobrenome }}</td>
                       <td>{{ user.email }}</td>
-                      <td>{{ user.created_at }}</td>
+                      <td>{{ user.registrado_em }}</td>
                     </tr>
                 </tbody>
               </table>
@@ -137,6 +137,7 @@ export default {
 
             this.data = res.data
             this.loading = false
+            this.dateFormated()
 
           })
           .catch((error) => {
@@ -157,6 +158,8 @@ export default {
 
       }
 
+    },
+    dateFormated: function () {
 
     }
   },

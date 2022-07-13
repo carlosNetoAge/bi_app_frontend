@@ -24,7 +24,7 @@
                 </div>
               </li>
             </router-link>
-            <router-link to="/">
+            <router-link to="/gerenciamento/dashboards" active-class="activeClass">
               <li>
                 <div>
                   <i class="fi fi-rr-chart-pie-alt"></i>
@@ -32,22 +32,22 @@
                 </div>
               </li>
             </router-link>
-            <router-link to="/">
-              <li>
-                <div>
-                  <i class="fi fi-rr-search-alt"></i>
-                  <span>Relatórios</span>
-                </div>
-              </li>
-            </router-link>
-            <router-link to="/">
-              <li>
-                <div>
-                  <i class="fi fi-rr-pulse"></i>
-                  <span>Log de acesso</span>
-                </div>
-              </li>
-            </router-link>
+<!--            <router-link to="/">-->
+<!--              <li>-->
+<!--                <div>-->
+<!--                  <i class="fi fi-rr-search-alt"></i>-->
+<!--                  <span>Relatórios</span>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--            </router-link>-->
+<!--            <router-link to="/">-->
+<!--              <li>-->
+<!--                <div>-->
+<!--                  <i class="fi fi-rr-pulse"></i>-->
+<!--                  <span>Log de acesso</span>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--            </router-link>-->
             <router-link to="/age">
               <li>
                 <div>

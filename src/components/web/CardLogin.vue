@@ -64,6 +64,7 @@ export default {
               $cookies.set("token", user.token, "1d")
               $cookies.set("email", user.email, "1d")
               $cookies.set("user_id", user.user_id, "1d")
+              $cookies.set("privilegio", user.privilege, "1d")
 
               this.$router.replace("age")
             }
