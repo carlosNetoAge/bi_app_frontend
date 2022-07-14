@@ -1,7 +1,7 @@
 <template>
   <form action="#" method="post" @submit.prevent>
     <input class="input-form" type="text" name="username" id="name" placeholder="E-mail" autocomplete="off" v-model="email">
-    <input class="input-form" type="password" name="password" id="password" placeholder="Senha" v-model="password">
+    <input class="input-form" type="password" name="password" id="password" placeholder="Senha" v-model="password" autocomplete="off">
     <input class="btn-submit" type="submit" value="Entrar" @click="authentication">
   </form>
 </template>
