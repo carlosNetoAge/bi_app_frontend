@@ -5,12 +5,12 @@
         <Menu/>
       </div>
       <div class="content-card">
-        <div class="section-content-last-users" v-if="step === 1">
+        <div class="section-content-last-users" v-if="step === 1 || step === 4">
           <div class="header-section" style="background-color: #F5F6FA; padding: 2.5vh 2vw; border-bottom: 2px solid #cccccc60">
             <span style="color: #51504F; padding: 0; ">Todos os menus</span>
           </div>
           <div class="btn-new">
-            <button @click="newMenu()">Novo menu</button>
+            <button @click="alterPage(4)">Novo menu</button>
           </div>
           <div style="overflow-y: auto; max-height: 75vh">
             <table v-if="loading === false">
@@ -51,10 +51,13 @@
             />
           </div>
         </div>
-        <div class="section-content-last-users left" v-if="step === 2">
+        <div class="section-content-last-users left" v-if="step === 2 || step === 5">
           <div class="header-section" @click="alterPage(1)" style="background-color: #F5F6FA; padding: 2vh 2vw; border-bottom: 2px solid #cccccc60; display: flex; gap: 1rem; align-items: center">
             <i class="fi fi-sr-arrow-left" style="color: #51504F; font-size: 2.2rem; cursor: pointer"></i>
             <span style="color: #51504F; padding: 0 0 .5vh 0; cursor: pointer; ">Voltar</span>
+          </div>
+          <div class="btn-new">
+            <button @click="alterPage(5)">Novo dashboard</button>
           </div>
           <div style="overflow-y: auto; max-height: 75vh">
             <table v-if="loading === false">
@@ -63,7 +66,7 @@
                 <th>ID</th>
                 <th>Dashboard</th>
                 <th style="text-align: center">Status</th>
-                <th>Ações</th>
+                <th style="text-align: center">Ações</th>
               </tr>
               </thead>
               <tbody>
@@ -78,7 +81,7 @@
                     <span :class="{inative: item.deleted_at}"> Inacessível </span>
                   </template>
                 </td>
-                <td class="actions-users">
+                <td class="actions-users" style="justify-content: center">
                   <template v-if="!item.deleted_at">
                     <i class="fi fi-rr-ban" style="color: var(--color-red)" @click="alterAccess(item.id, 'inative', 'submenu')"></i>
                     <i class="fi fi-rr-edit" @click="alterPage(3, item.id)"></i>
@@ -123,12 +126,41 @@
         </div>
     </div>
     <div class="modal" v-if="step === 4">
-      <div class="card-modal" style="width: 40vw; height: 20vw; padding: 3vh 2vw">
+      <div class="card-modal" style="width: 30vw; height: 20vw;">
         <div class="new-item">
-            <h6>Novo Menu</h6>
+            <div class="header-new-item">
+              <h6>Novo Menu</h6>
+              <div class="btn-close" style="width: 50%">
+                <i class="fi fi-sr-cross-small" @click="alterPage(1)"></i>
+              </div>
+            </div>
           <div class="form-new-item">
             <label for="menu">Nome</label>
-            <input type="text" name="menu" id="menu">
+            <input type="text" name="menu" id="menu" v-model="this.new.menu.item" autocomplete="off">
+            <div class="btn-new" style="padding: 2vh 0; width: 80%">
+              <button @click="newMenu()" style="padding: 1vh 0;width: 100%">Cadastrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" v-if="step === 5">
+      <div class="card-modal" style="width: 30vw; height: 25vw;">
+        <div class="new-item">
+          <div class="header-new-item">
+            <h6>Novo dashboard</h6>
+            <div class="btn-close" style="width: 50%">
+              <i class="fi fi-sr-cross-small" @click="alterPage(2, item_id)"></i>
+            </div>
+          </div>
+          <div class="form-new-item">
+            <label for="subitem">Nome</label>
+            <input type="text" name="subitem" id="subitem" v-model="this.new.submenu.subitem" autocomplete="off">
+            <label for="iframe">Iframe</label>
+            <input type="text" name="iframe" id="iframe" v-model="this.new.submenu.iframe" autocomplete="off">
+            <div class="btn-new" style="padding: 2vh 0; width: 80%">
+              <button @click="newSubMenu()" style="padding: 1vh 0;width: 100%">Cadastrar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -157,9 +189,18 @@ export default {
       submenu_unique: {},
       response: null,
       msg: '',
-      step: 4,
+      step: 1,
       iframe: '',
-      item_id: 0
+      item_id: 0,
+      new: {
+        menu: {
+          item: ''
+        },
+        submenu: {
+          subitem: '',
+          iframe: ''
+        }
+      }
     }
   },
   methods: {
@@ -363,7 +404,68 @@ export default {
 
     },
     newMenu: function () {
-      alert("novo")
+
+      axios({
+        method: "POST",
+        url: "http://localhost:8000/api/menu_items",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": $cookies.get('token'),
+        },
+        data: {
+          item: this.new.menu.item
+        }
+      })
+          .then((res) => {
+
+            this.msg = res.msg
+            if(res.data.status === true) {
+              this.step = 1
+              this.loading = true
+              this.new.menu.item = ''
+              this.getMenus()
+            }
+
+          })
+          .catch((error) => {
+
+          })
+
+    },
+    newSubMenu: function () {
+
+      axios({
+        method: "POST",
+        url: "http://localhost:8000/api/sub_menus",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": $cookies.get('token'),
+        },
+        data: {
+          subitem: this.new.submenu.subitem,
+          iframe: this.new.submenu.iframe,
+          item_id: this.item_id
+        }
+      })
+          .then((res) => {
+
+            this.msg = res.msg
+
+            console.log(res.data)
+
+            if(res.data.status === true) {
+              this.step = 2
+              this.loading = true
+              this.new.submenu.subitem = ''
+              this.new.submenu.iframe = ''
+              this.getSubMenus(res.data.item_id)
+            }
+
+          })
+          .catch((error) => {
+
+          })
+
     }
   },
   mounted() {
@@ -667,27 +769,52 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    gap: 10vh;
   }
 
-  .new-item h6 {
+  .header-new-item {
+    border-bottom: 1px solid #cccccc80;
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .header-new-item h6 {
     font-size: 2rem;
     color: #51504F;
     letter-spacing: .2px;
+    padding: 2vh 1vw;
   }
 
   .form-new-item {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    padding: 4vh 2vw 2vh 5vw;
   }
 
   .form-new-item label {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: #51504F;
     font-weight: 600;
+    margin: 1vh 0;
   }
 
+  .form-new-item input[type=text] {
+    width: 80%;
+    height: 5vh;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+    background-color: #f4f4f4;
+    outline: none;
+    transition: .3s ease-in-out;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: var(--color-text-light);
+  }
+
+  .form-new-item input[type=text]:focus {
+    background-color: #ececec;
+  }
 </style>

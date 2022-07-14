@@ -31,7 +31,7 @@
         <nav v-if="step === 0">
           <ul class="href-menu" :class="{ animation_right : back === true } ">
             <span>Ações</span>
-            <router-link to="/gerenciamento">
+            <router-link to="/gerenciamento" v-if="privilege === '1'">
               <li>
                 <div></div>
                 <div>
@@ -66,7 +66,8 @@ export default {
       step: 0,
       menuItems: null,
       subMenuItems: null,
-      back: null
+      back: null,
+      privilege: $cookies.get('privilegio')
     }
   },
   methods: {

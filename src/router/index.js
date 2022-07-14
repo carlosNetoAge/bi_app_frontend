@@ -26,19 +26,19 @@ const routes = [
     path: '/gerenciamento',
     name: 'Management',
     component: Management,
-    beforeEnter: Guard.auth
+    beforeEnter: Guard.authAdmin
   },
   {
     path: '/gerenciamento/usuarios',
     name: 'Users',
     component: Users,
-    beforeEnter: Guard.auth
+    beforeEnter: Guard.authAdmin
   },
   {
     path: '/gerenciamento/dashboards',
     name: 'Dashboard',
     component: Dashboard,
-    beforeEnter: Guard.auth
+    beforeEnter: Guard.authAdmin
   },
   {
     path: '/recuperar-senha',
