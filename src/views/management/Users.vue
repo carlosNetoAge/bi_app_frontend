@@ -119,7 +119,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "http://localhost:8000/api/users",
+        url: "https://v1.easytools.dev.br/api/users",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -179,7 +179,7 @@ export default {
 
           axios({
             method: "DELETE",
-            url: "http://localhost:8000/api/users/"+id,
+            url: "https://v1.easytools.dev.br/api/users/"+id,
             headers: {
               "Content-Type": "application/json",
               "authorization": $cookies.get('token'),
@@ -205,7 +205,7 @@ export default {
 
         axios({
           method: "PUT",
-          url: "http://localhost:8000/api/users/restore/"+id,
+          url: "https://v1.easytools.dev.br/api/users/restore/"+id,
           headers: {
             "Content-Type": "application/json",
             "authorization": $cookies.get('token'),

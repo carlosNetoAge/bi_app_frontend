@@ -127,7 +127,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "http://localhost:8000/api/info-geral",
+        url: "https://v1.easytools.dev.br/api/info-geral",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),

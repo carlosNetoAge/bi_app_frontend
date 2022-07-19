@@ -45,7 +45,7 @@ export default {
 
       axios({
         method: "POST",
-        url: "https://easytools.dev.br/v1/api/login",
+        url: "/login",
         headers: {
           "Content-Type": "application/json"
         },

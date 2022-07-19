@@ -74,16 +74,17 @@ export default {
     getMenuItems: function () {
       axios({
         method: "GET",
-        url: "http://localhost:8000/api/allowed/list_menu",
+        url: "https://v1.easytools.dev.br/api/allowed/list_menu",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
-          "user_id": $cookies.get('user_id')
+          "user-id": $cookies.get('user_id')
         }
       })
           .then((res) => {
 
             this.menuItems = res.data
+            console.log(res.data)
 
           })
           .catch((error) => {
@@ -93,12 +94,12 @@ export default {
     subMenu: function (id) {
       axios({
         method: "GET",
-        url: "http://localhost:8000/api/allowed/list_submenu",
+        url: "https://v1.easytools.dev.br/api/allowed/list_submenu",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
-          "user_id": $cookies.get('user_id'),
-          "item_id": id
+          "user-id": $cookies.get('user_id'),
+          "item-id": id
         }
       })
           .then((res) => {
