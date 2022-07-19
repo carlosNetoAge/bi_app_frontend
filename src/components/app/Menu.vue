@@ -74,7 +74,7 @@ export default {
     getMenuItems: function () {
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/allowed/list_menu",
+        url: "/allowed/list_menu",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -94,7 +94,7 @@ export default {
     subMenu: function (id) {
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/allowed/list_submenu",
+        url: "/allowed/list_submenu",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),

@@ -208,7 +208,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/menu_items",
+        url: "/menu_items",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -228,7 +228,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/sub_menus/"+id,
+        url: "/sub_menus/"+id,
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -249,7 +249,7 @@ export default {
 
         axios({
           method: "GET",
-          url: "https://v1.easytools.dev.br/api/sub_menu/"+id,
+          url: "/sub_menu/"+id,
           headers: {
             "Content-Type": "application/json",
             "authorization": $cookies.get('token'),
@@ -276,7 +276,7 @@ export default {
 
             axios({
               method: "GET",
-              url: "https://v1.easytools.dev.br/api/menu_items/create",
+              url: "/menu_items/create",
               headers: {
                 "Content-Type": "application/json",
                 "authorization": $cookies.get('token'),
@@ -300,7 +300,7 @@ export default {
 
           axios({
             method: "GET",
-            url: "https://v1.easytools.dev.br/api/sub_menus/create",
+            url: "/sub_menus/create",
             headers: {
               "Content-Type": "application/json",
               "authorization": $cookies.get('token'),
@@ -325,7 +325,7 @@ export default {
           if(type === 'menu') {
             axios({
               method: "DELETE",
-              url: "https://v1.easytools.dev.br/api/menu_items/"+id,
+              url: "/menu_items/"+id,
               headers: {
                 "Content-Type": "application/json",
                 "authorization": $cookies.get('token'),
@@ -347,7 +347,7 @@ export default {
 
               axios({
                 method: "DELETE",
-                url: "https://v1.easytools.dev.br/api/sub_menus/"+id,
+                url: "/sub_menus/"+id,
                 headers: {
                   "Content-Type": "application/json",
                   "authorization": $cookies.get('token'),
@@ -382,7 +382,7 @@ export default {
 
       axios({
         method: "POST",
-        url: "https://v1.easytools.dev.br/api/sub_menu/iframe",
+        url: "/sub_menu/iframe",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -407,7 +407,7 @@ export default {
 
       axios({
         method: "POST",
-        url: "https://v1.easytools.dev.br/api/menu_items",
+        url: "/menu_items",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -436,7 +436,7 @@ export default {
 
       axios({
         method: "POST",
-        url: "https://v1.easytools.dev.br/api/sub_menus",
+        url: "/sub_menus",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),

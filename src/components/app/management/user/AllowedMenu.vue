@@ -114,7 +114,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/allowed/menu_general",
+        url: "/allowed/menu_general",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -145,7 +145,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/menu_items/"+id,
+        url: "/menu_items/"+id,
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -167,7 +167,7 @@ export default {
 
       axios({
         method: "GET",
-        url: "https://v1.easytools.dev.br/api/allowed/menu_submenu_general/",
+        url: "/allowed/menu_submenu_general/",
         headers: {
           "Content-Type": "application/json",
           "authorization": $cookies.get('token'),
@@ -194,7 +194,7 @@ export default {
 
               axios({
                 method: "GET",
-                url: "https://v1.easytools.dev.br/api/menu-permissions/create",
+                url: "/menu-permissions/create",
                 headers: {
                   "Content-Type": "application/json",
                   "authorization": $cookies.get('token'),
@@ -225,7 +225,7 @@ export default {
 
               axios({
                 method: "GET",
-                url: "https://v1.easytools.dev.br/api/submenu-permissions/create",
+                url: "/submenu-permissions/create",
                 headers: {
                   "Content-Type": "application/json",
                   "authorization": $cookies.get('token'),
@@ -262,7 +262,7 @@ export default {
 
               axios({
                 method: "DELETE",
-                url: "https://v1.easytools.dev.br/api/menu-permissions/"+id,
+                url: "/menu-permissions/"+id,
                 headers: {
                   "Content-Type": "application/json",
                   "authorization": $cookies.get('token'),
@@ -292,7 +292,7 @@ export default {
 
               axios({
                 method: "DELETE",
-                url: "https://v1.easytools.dev.br/api/submenu-permissions/"+id,
+                url: "/submenu-permissions/"+id,
                 headers: {
                   "Content-Type": "application/json",
                   "authorization": $cookies.get('token'),

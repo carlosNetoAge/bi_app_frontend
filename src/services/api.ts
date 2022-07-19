@@ -1,7 +1,7 @@
 import axios, {AxiosInstance} from "axios";
 
 const api = axios.create({
-    baseURL: "https://v1.easytools/api/"
+    baseURL: "https://easytools.dev.br/api/"
 });
 
 export default api;
